@@ -1,8 +1,6 @@
-
-# from contextlib import nullcontext
-# from inspect import signature
-# from string import capwords
+# from time import timezone
 from django.db import models
+from datetime import datetime
 # Create your models here.
 class Customer(models.Model):
     first_name=models.CharField(max_length=20)
@@ -13,6 +11,12 @@ class Customer(models.Model):
     gender=models.CharField(max_length=10)
     age=models.PositiveSmallIntegerField()
     profile_picture = models.ImageField(default='default.jpg', upload_to='profile_pics')
+    GENDER_CHOISES = (
+        ('M', 'Male'),
+        ('F', 'Female'),
+    )
+    nationality = models.CharField(max_length=20,null=True)
+    
     
 class Currency(models.Model):
     country= models.CharField(max_length=30)
@@ -42,6 +46,10 @@ class Transaction(models.Model):
     wallet = models.ForeignKey("Wallet",on_delete=models.CASCADE,related_name='Transaction_wallet')
     transaction_description = models.CharField(max_length=9)
     transaction_amount = models.BigIntegerField()
+    TRANSACTION_CHOICES = (
+        ('withdraw','Withdrawal'),
+        ('deposit', 'Deposit')
+    )
     transaction_charge = models.IntegerField()
     transaction_type = models.CharField(max_length=6)
     receipt = models.ForeignKey("Receipt",on_delete=models.CASCADE,related_name='Transaction_receipt')
@@ -70,6 +78,11 @@ class ThirdParty(models.Model):
     issuer= models.CharField(max_length=20)
     
 class Notification(models.Model):
+    STATUS_CHOICE = (
+        ('read','read'),
+        ('unread','unread'),
+    )
+    status = models.CharField(max_length=12,choices=STATUS_CHOICE,null=True)
     message= models.CharField(max_length=100)
     date = models.DateTimeField()
     recipient= models.ForeignKey("Customer",on_delete=models.CASCADE,related_name='Thirdparty_recipient')
@@ -81,21 +94,26 @@ class Receipt(models.Model):
     receipt_number= models.IntegerField()
     amount= models.IntegerField()
     transaction = models.ForeignKey("Transaction",on_delete=models.CASCADE,related_name='Thirdparty_transaction')
-    
     receipt_file = models.FileField()
+    
 class Loan(models.Model):
     loan_id = models.IntegerField()
+    date = models.DateTimeField()
+    interest_rate = models.IntegerField()
     loan_type = models.CharField(max_length=15)
     loan_balance = models.IntegerField()
     amount = models.IntegerField()
     guaranter = models.CharField(max_length=20)
     issuer = models.CharField(max_length=20)
     wallet = models.ForeignKey("Wallet",on_delete=models.CASCADE,related_name='Loan_wallet')
+    
 class Reward(models.Model):
     transaction= models.ForeignKey("Transaction",on_delete=models.CASCADE,related_name='Reward_transaction')
     recipient = models.ForeignKey("Customer",on_delete=models.CASCADE,related_name='Reward_recipient')
     date_of_reward = models.DateTimeField()
     points = models.IntegerField() 
+    gender = models.CharField(max_length=1)
+    bonus = models.CharField(max_length=25, null=True)
 
 
     
