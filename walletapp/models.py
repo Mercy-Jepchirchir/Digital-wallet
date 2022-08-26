@@ -93,7 +93,6 @@ class Receipt(models.Model):
     date = models.DateTimeField()
     receipt_number= models.IntegerField()
     amount= models.IntegerField()
-    transaction = models.ForeignKey("Transaction",on_delete=models.CASCADE,related_name='Thirdparty_transaction')
     receipt_file = models.FileField()
     
 class Loan(models.Model):
@@ -112,7 +111,6 @@ class Reward(models.Model):
     recipient = models.ForeignKey("Customer",on_delete=models.CASCADE,related_name='Reward_recipient')
     date_of_reward = models.DateTimeField()
     points = models.IntegerField() 
-    gender = models.CharField(max_length=1)
     bonus = models.CharField(max_length=25, null=True)
 
 
