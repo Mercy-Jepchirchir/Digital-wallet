@@ -8,15 +8,15 @@
 </head>
 <body>
     <table>
-        {%for card in  cards%}
-        <th>
+        {% for card in  cards %}
+        {% comment %} <th> {% endcomment %}
             <tr>
                 <td>{{card.card_number}}</td>
                 <td>{{card.expiry_date}}</td>
                 {% comment %} <td>{{account.account_balance}}</td> {% endcomment %}
             </tr>
-            {%endfor%}
-        </th>
+            {% endfor %}
+        {% comment %} </th> {% endcomment %}
     </table>
    
 </body>
