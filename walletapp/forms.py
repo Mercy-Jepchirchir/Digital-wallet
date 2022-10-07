@@ -21,10 +21,14 @@ class AccountRegistrationForm(forms.ModelForm):
         model = models.Account
         fields = "__all__"
         
+        #added Transaction
+        
 class TransactionRegistrationForm(forms.ModelForm):
     class Meta:
         model = models.Transaction
         fields = "__all__"
+        
+        #added card
         
 class CardRegistrationForm(forms.ModelForm):
     class Meta:

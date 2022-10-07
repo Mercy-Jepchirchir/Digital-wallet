@@ -64,13 +64,12 @@ def register_account(request):
             
     else:
         form = forms.AccountRegistrationForm()
-        return render(request,'wallet/register_account.html',
-                  {"form":form})
+    return render(request,'wallet/register_account.html',{"form":form})
         
 def list_account(request):
-    accounts = models.Account.objects.all()
+    Z = models.Account.objects.all()
     return render (request,'wallet/list_account.html',
-                   {"accounts ": accounts}) 
+                   {"Z": Z}) 
                 
 def register_transaction(request):
     if form.method == "POST":
